@@ -1,0 +1,97 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.bg {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fafafa;
+}
+
+.btn {
+    font-size: 16px;
+    border: 0;
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px #00000033;
+    color: #000000;
+    padding: 10px 25px;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 500;
+    border-radius: 100px;
+    transition: background-color 0.1s ease;
+}
+
+.btn:hover {
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #4C43E0;
+    cursor: pointer;
+}
+
+.btnprimary {
+    background-color: #4C43E0;
+    color: #ffffff;
+}
+
+.btnprimary {
+    background-color: #4C43E0;
+    color: #ffffff;
+}
+
+.btnprimary:hover {
+    background-color: #3b36c0;
+}
+
+.textbar {
+    min-width: 50%;
+    display: block;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 3px 1px #00000033;
+    border: 0;
+}
+
+.textbar:focus {
+    box-shadow: 0px 0px 3px 1px #00000066;
+    outline: none;
+    transition: 0.1s ease;
+}
+
+.container {
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px #00000033;
+    padding: 15px;
+    width: 35%;
+    height: 55%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+    border-radius: 8px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form * {
+    margin: 8px;
+}
+
+.txt {
+    margin: 5px;
+}
+
+.ico {
+    height: 80px;
+    margin: 5px;
+}
