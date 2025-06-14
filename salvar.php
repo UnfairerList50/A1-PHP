@@ -4,11 +4,12 @@ require_once 'autenticacao_usuario.php';
 
 $retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        if (form_em_branco()) {
-            throw new Exception('Preencha todos os campos do formulário.', 1);
-        }
+    if (form_em_branco()) {
+        header('Location: salvar.php?code=4');
+        exit;
+    }
 
+    try {
         $conn = mysqli_connect('localhost', 'root', '', 'cinema');
 
         $sql = "INSERT INTO filmes (lancamento, titulo, sinopse, duracao, avaliacao, usuarioId)
@@ -24,20 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        $retorno = [
-            'sucesso' => false,
-            'mensagem' => 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.'
-        ];
-    } catch (Exception $e) {
-        $retorno = [
-            'sucesso' => false,
-            'mensagem' => $e->getMessage()
-        ];
-    } finally {
         !isset($conn) ?: mysqli_close($conn);
+        header('Location: salvar.php?code=2');
+        exit;
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -50,9 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include 'header.html'; ?>
+    <?php include 'header.php'; ?>
     <section class="container">
-        <h1>Salvar filme</h1>
+        <h1>Salvar novo filme</h1>
         <?php
         if (isset($retorno)) {
             echo '<p class=' . ($retorno['sucesso'] ? 'txt' : 'erro') . '>' . $retorno["mensagem"] . '</p>';
@@ -62,14 +56,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ?>
         <form action="salvar.php" method="POST" class="form">
             <div class="formgroup">
-                <label for="id">ID do filme</label>
-                <input class="forminput" type="number" name="id" id="id" placeholder="Gerado automaticamente" disabled>
-                <label for="lancamento">Lançamento</label>
-                <input class="forminput" type="date" id="lancamento" name="lancamento" required>
-            </div>
-            <div class="formgroup">
                 <label for="titulo">Título</label>
                 <input class="forminput" type="text" id="titulo" name="titulo" required>
+            </div>
+            <div class="formgroup">
+                <label for="lancamento">Lançamento</label>
+                <input class="forminput" type="date" id="lancamento" name="lancamento" required>
             </div>
             <div class="formgroup">
                 <label for="sinopse">Sinopse</label>

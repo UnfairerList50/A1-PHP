@@ -18,17 +18,9 @@ try {
         $filmes[] = $linha;
     }
 } catch (mysqli_sql_exception $e) {
-    $retorno = [
-        'sucesso' => false,
-        'mensagem' => 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.'
-    ];
-} catch (Exception $e) {
-    $retorno = [
-        'sucesso' => false,
-        'mensagem' => $e->getMessage()
-    ];
-} finally {
     !isset($conn) ?: mysqli_close($conn);
+    header('Location: listar.php?code=2');
+    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -43,10 +35,15 @@ try {
 </head>
 
 <body>
-    <?php include 'header.html'; ?>
+    <?php include 'header.php'; ?>
     <section class="container">
         <h1>Filmes salvos</h1>
         <?php
+        if (empty($filmes)) {
+            echo '<p class="txt">Nenhum filme encontrado.</p>';
+            echo '<a class="btn btnprimary" href="salvar.php">Salvar filme</a>';
+            exit;
+        }
         if (isset($retorno)) {
             echo '<p class=' . ($retorno['sucesso'] ? 'txt' : 'erro') . '>' . $retorno["mensagem"] . '</p>';
             echo '<a class="btn btnprimary" href="home.php">Ir ao início</a>';
@@ -70,13 +67,13 @@ try {
                     <tr>
                         <td><?= $filme['id'] ?></td>
                         <td><?= $filme['titulo'] ?></td>
-                        <td><?= $filme['lancamento'] ?></td>
+                        <td><?= date_format(new DateTime($filme['lancamento']), "d/m/Y") ?></td>
                         <td><?= $filme['sinopse'] ?></td>
-                        <td><?= $filme['duracao'] ?></td>
+                        <td><?= date_format(new DateTime($filme['duracao']), "H:i") ?></td>
                         <td><?= $filme['avaliacao'] ?></td>
                         <td>
-                            <a href="salvar.php?action=edit&id=<?= $filme['id'] ?>" class="btn btnprimary">Editar</a>
-                            <a href="listar.php?action=delete&id=<?= $filme['id'] ?>" class="btn">Excluir</a>
+                            <a href="editar.php?id=<?= $filme['id'] ?>" class="btn btnprimary">Editar</a>
+                            <a href="excluir.php?id=<?= $filme['id'] ?>" class="btn">Excluir</a>
                         </td>
                     </tr>
                 <?php } ?>

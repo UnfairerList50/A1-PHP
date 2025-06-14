@@ -33,5 +33,25 @@ function tratar_retorno()
                 'mensagem' => 'Você não tem permissão para acessar a página de destino. Faça login e tente novamente.'
             ];
             break;
+
+        case 2:
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.'
+            ];
+            break;
+        case 3:
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Filme não encontrado. Verifique o ID e tente novamente.'
+            ];
+            break;
+
+        case 4:
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Preencha todos os campos do formulário.'
+            ];
+            break;
     }
 }

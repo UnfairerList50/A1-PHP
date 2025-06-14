@@ -1,13 +1,13 @@
 <?php
 require_once 'funcoes.php';
 
-$erro;
+$retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (form_em_branco()) {
+        header('Location:cadastrar_usuario.php?code=4');
+        exit;
+    }
     try {
-        if (form_em_branco()) {
-            throw new Exception('Preencha todos os campos do formulário.', 1);
-        }
-
         $conn = mysqli_connect('localhost', 'root', '', 'cinema');
 
         $sql = "INSERT INTO usuarios (usuario, email, senha) VALUES (?, ?, ?)";
@@ -22,11 +22,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        $erro = 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.';
-    } catch (Exception $e) {
-        $erro = $e->getMessage();
-    } finally {
         !isset($conn) ?: mysqli_close($conn);
+        header('Location: cadastrar_usuario.php?code=2');
+        exit;
     }
 }
 ?>

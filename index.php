@@ -3,11 +3,12 @@ require_once 'funcoes.php';
 
 $retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        if (form_em_branco()) {
-            throw new Exception('Preencha todos os campos do formulário.', 1);
-        }
+    if (form_em_branco()) {
+        header('Location:index.php?code=4');
+        exit;
+    }
 
+    try {
         $conn = mysqli_connect('localhost', 'root', '', 'cinema');
 
         $sql = "SELECT id, usuario, senha FROM usuarios
@@ -18,10 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_execute($stmt);
         mysqli_stmt_store_result($stmt);
 
-        $linhas = mysqli_stmt_num_rows($stmt);
-
-        if ($linhas <= 0) {
-            throw new Exception('Usuário ou senha inválidos. Tente novamente.', 1);
+        if (mysqli_stmt_num_rows($stmt) <= 0) {
+            mysqli_close($conn);
+            header('Location:index.php?code=1');
+            exit;
         }
 
         mysqli_stmt_bind_result($stmt, $id, $usuario, $senha);
@@ -34,17 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         header('location:home.php');
     } catch (mysqli_sql_exception $e) {
-        $retorno = [
-            'sucesso' => false,
-            'mensagem' => 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.'
-        ];
-    } catch (Exception $e) {
-        $retorno = [
-            'sucesso' => false,
-            'mensagem' => $e->getMessage()
-        ];
-    } finally {
         !isset($conn) ?: mysqli_close($conn);
+        header('Location: listar.php?code=2');
+        exit;
     }
 }
 ?>

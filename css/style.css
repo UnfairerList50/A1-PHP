@@ -122,6 +122,7 @@ body {
 }
 
 .table {
+    text-align: center;
     width: 100%;
     background-color: #ffffff;
     border-collapse: collapse;
