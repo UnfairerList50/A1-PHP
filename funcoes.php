@@ -1,46 +1,37 @@
 <?php
 
-function post_nao_enviado()
-{
-    return $_SERVER['REQUEST_METHOD'] !== 'POST';
-}
-
 function form_em_branco()
 {
-    return empty($_POST['usuario']) || empty($_POST['senha']);
+    foreach ($_POST as $campo => $valor) {
+        if ($campo === 'id') {
+            continue;
+        }
+        if (empty(($valor))) {
+            return true;
+        }
+    }
 }
 
-function tratar_erros()
+function tratar_retorno()
 {
-
-    if (!isset($_GET['error'])) {
+    if (!isset($_GET['code'])) {
         return;
     }
 
-    $error = (int)$_GET['error'];
-
-    switch ($error) {
+    switch ((int)$_GET['code']) {
 
         case 0:
-            $erro = '<h3>Você não tem permissão para acessar a página de destino.</h3>';
+            return [
+                'sucesso' => true,
+                'mensagem' => 'Operação realizada com sucesso.'
+            ];
             break;
 
         case 1:
-            $erro = '<h3>Usuário ou senha inválidos. Tente novamente.</h3>';
-            break;
-
-        case 2:
-            $erro = '<h2>Preencha todos os campos do formulário para continuar.</h2>';
-            break;
-
-        case 3:
-            $erro = '<h3>Erro ao consultar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.</h3>';
-            break;
-
-        default:
-            $erro = "";
+            return [
+                'sucesso' => false,
+                'mensagem' => 'Você não tem permissão para acessar a página de destino. Faça login e tente novamente.'
+            ];
             break;
     }
-
-    echo $erro;
 }

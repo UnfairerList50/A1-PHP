@@ -2,27 +2,35 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.bg {
+body {
     margin: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     background-color: #fafafa;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+}
+
+.bg {
+    height: 100vh;
+    justify-content: center;
 }
 
 .btn {
+    display: inline-block;
     font-size: 16px;
     border: 0;
     background-color: #ffffff;
-    box-shadow: 0 8px 16px #00000033;
     color: #000000;
-    padding: 10px 25px;
+    padding: 10px 20px;
     text-decoration: none;
     text-align: center;
     font-weight: 500;
     border-radius: 100px;
-    transition: background-color 0.1s ease;
+    transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.btnsecundary {
+    box-shadow: 0 4px 8px #00000033;
 }
 
 .btn:hover {
@@ -37,61 +45,127 @@
     color: #ffffff;
 }
 
-.btnprimary {
-    background-color: #4C43E0;
-    color: #ffffff;
-}
-
 .btnprimary:hover {
     background-color: #3b36c0;
 }
 
-.textbar {
-    min-width: 50%;
+.forminput {
+    width: 70%;
     display: block;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0px 0px 3px 1px #00000033;
     border: 0;
+    flex: 1 1 0;
 }
 
-.textbar:focus {
+.forminput:focus {
     box-shadow: 0px 0px 3px 1px #00000066;
     outline: none;
     transition: 0.1s ease;
 }
 
 .container {
-    background-color: #ffffff;
-    box-shadow: 0 8px 16px #00000033;
-    padding: 15px;
-    width: 35%;
-    height: 55%;
-    margin: 20px auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    flex-wrap: wrap;
-    border-radius: 8px;
-}
-
-.form {
+    width: 80%;
+    margin: 15px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    gap: 10px;
 }
 
-.form * {
-    margin: 8px;
+.card {
+    background-color: #ffffff;
+    box-shadow: 0 8px 16px #00000033;
+    padding: 15px;
+    width: 440px;
+    height: 440px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.form {
+    margin: 0;
+    display: flex;
+    min-width: 80%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.formgroup {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 12px;
 }
 
 .txt {
     margin: 5px;
 }
 
+.erro {
+    margin: 5px;
+    color: #d10e0e;
+}
+
 .ico {
     height: 80px;
     margin: 5px;
+}
+
+.table {
+    width: 100%;
+    background-color: #ffffff;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table * {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.table thead {
+    background-color: #4C43E0;
+    color: white;
+}
+
+.navbar {
+    min-height: 55px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 6px 20px;
+    list-style: none;
+    overflow: hidden;
+    box-shadow: 0 4px 5px #00000033;
+    gap: 10px;
+}
+
+.navitem .btn {
+    min-width: 75px;
+}
+
+.navlogout {
+    margin-left: auto;
+}
+
+.link {
+    text-decoration: none;
+    color: #4C43E0;
+}
+
+.link:hover {
+    text-decoration: underline;
 }
