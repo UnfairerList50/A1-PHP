@@ -14,18 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         mysqli_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            mysqli_close($conn);
             header('location:listar.php?code=0');
             exit;
         } else {
-            header('location:listar.php?code=3');
+            header('location:listar.php?code=5');
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        !isset($conn) ?: mysqli_close($conn);
-        header('Location: listar.php?code=2');
+        header('Location: listar.php?code=4');
         exit;
-    } finally {
-        !isset($conn) ?: mysqli_close($conn);
     }
 }

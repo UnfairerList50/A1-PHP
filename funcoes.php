@@ -10,6 +10,7 @@ function form_em_branco()
             return true;
         }
     }
+    return false;
 }
 
 function tratar_retorno()
@@ -21,37 +22,35 @@ function tratar_retorno()
     switch ((int)$_GET['code']) {
 
         case 0:
-            return [
-                'sucesso' => true,
-                'mensagem' => 'Operação realizada com sucesso.'
-            ];
+            return 'Operação realizada com sucesso.';
             break;
 
         case 1:
-            return [
-                'sucesso' => false,
-                'mensagem' => 'Você não tem permissão para acessar a página de destino. Faça login e tente novamente.'
-            ];
+            return 'Preencha todos os campos do formulário.';
             break;
 
         case 2:
-            return [
-                'sucesso' => false,
-                'mensagem' => 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.'
-            ];
+            return 'Usuário ou senha inválidos.';
             break;
+
         case 3:
-            return [
-                'sucesso' => false,
-                'mensagem' => 'Filme não encontrado. Verifique o ID e tente novamente.'
-            ];
+            return 'Você não tem permissão para acessar a página de destino. Faça login e tente novamente.';
             break;
 
         case 4:
-            return [
-                'sucesso' => false,
-                'mensagem' => 'Preencha todos os campos do formulário.'
-            ];
+            return 'Erro ao acessar o banco de dados. Tente novamente mais tarde, ou contate o administrador do sistema.';
+            break;
+
+        case 5:
+            return 'Filme não encontrado. Verifique o ID e tente novamente.';
+            break;
+
+        case 6:
+            return 'Não há filmes salvos.';
+            break;
+
+        case 7:
+            return 'Usuário já cadastrado.';
             break;
     }
 }

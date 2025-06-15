@@ -4,7 +4,7 @@ require_once 'funcoes.php';
 $retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
-        header('Location:cadastrar_usuario.php?code=4');
+        header('Location:criar_usuario.php?code=1');
         exit;
     }
     try {
@@ -17,33 +17,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            mysqli_close($conn);
             header('location:index.php?code=0');
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        !isset($conn) ?: mysqli_close($conn);
-        header('Location: cadastrar_usuario.php?code=2');
-        exit;
+        if ($e->getCode() == 1062) {
+            // Codigo indica que usuario ja existe
+            header('Location: criar_usuario.php?code=7');
+            exit;
+        } else {
+            header('Location: criar_usuario.php?code=3');
+            exit;
+        }
     }
 }
 ?>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Criar conta</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar nova conta</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="ico/camera-reels-fill.svg" type="image/x-icon">
+</head>
+
 <body class="bg">
+    <?php include 'toast.php'; ?>
     <section class="container card">
-        <h1>Criar conta</h1>
-        <p class="txt"><?= isset($erro) ? $erro : 'Digite suas informações para criar uma conta' ?></p>
-        <form action="cadastrar_usuario.php" class="form" method="POST">
+        <h1>Criar nova conta</h1>
+        <form action="criar_usuario.php" class="form" method="POST">
             <input class="forminput" type="text" id="usuario" name="usuario" placeholder="Nome do usuário" required>
             <input class="forminput" type="email" id="email" name="email" placeholder="E-mail" required>
             <input class="forminput" type="password" id="senha" name="senha" placeholder="Senha" required>

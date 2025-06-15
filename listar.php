@@ -2,25 +2,29 @@
 require_once 'autenticacao_usuario.php';
 require_once 'funcoes.php';
 
-$retorno = tratar_retorno();
-try {
-    $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+if (!isset($_GET['code']) || $_GET['code'] == 0) {
+    try {
+        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
 
-    $query = "SELECT * FROM filmes WHERE usuarioId = ?";
+        $query = "SELECT * FROM filmes WHERE usuarioId = ?";
 
-    $stmt = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $_SESSION['id']);
-    mysqli_execute($stmt);
-    $resultado = mysqli_stmt_get_result($stmt);
+        $stmt = mysqli_prepare($conn, $query);
+        mysqli_stmt_bind_param($stmt, 'i', $_SESSION['id']);
+        mysqli_execute($stmt);
+        $resultado = mysqli_stmt_get_result($stmt);
 
-    $filmes = [];
-    while ($linha = mysqli_fetch_assoc($resultado)) {
-        $filmes[] = $linha;
+        if (mysqli_num_rows($resultado) <= 0) {
+            header('Location: listar.php?code=6');
+            exit;
+        }
+
+        while ($linha = mysqli_fetch_assoc($resultado)) {
+            $filmes[] = $linha;
+        }
+    } catch (mysqli_sql_exception $e) {
+        header('Location: listar.php?code=4');
+        exit;
     }
-} catch (mysqli_sql_exception $e) {
-    !isset($conn) ?: mysqli_close($conn);
-    header('Location: listar.php?code=2');
-    exit;
 }
 ?>
 <!DOCTYPE html>
@@ -31,25 +35,17 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="ico/camera-reels-fill.svg" type="image/x-icon">
-    <title>Início</title>
+    <title>Ver filmes salvos</title>
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'header.php';
+    include 'toast.php'; ?>
     <section class="container">
         <h1>Filmes salvos</h1>
-        <?php
-        if (empty($filmes)) {
-            echo '<p class="txt">Nenhum filme encontrado.</p>';
-            echo '<a class="btn btnprimary" href="salvar.php">Salvar filme</a>';
+        <?php if (!isset($filmes)) {
             exit;
-        }
-        if (isset($retorno)) {
-            echo '<p class=' . ($retorno['sucesso'] ? 'txt' : 'erro') . '>' . $retorno["mensagem"] . '</p>';
-            echo '<a class="btn btnprimary" href="home.php">Ir ao início</a>';
-            exit;
-        }
-        ?>
+        } ?>
         <table class="table">
             <thead>
                 <tr>

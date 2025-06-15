@@ -2,7 +2,6 @@
 require_once 'funcoes.php';
 require_once 'autenticacao_usuario.php';
 
-$retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
         header('Location: salvar.php?code=4');
@@ -20,13 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            mysqli_close($conn);
             header('location:salvar.php?code=0');
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        !isset($conn) ?: mysqli_close($conn);
-        header('Location: salvar.php?code=2');
+        header('Location: salvar.php?code=4');
         exit;
     }
 }
@@ -40,20 +37,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="ico/camera-reels-fill.svg" type="image/x-icon">
-    <title>Início</title>
+    <title>Salvar novo filme</title>
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'header.php';
+    include 'toast.php'; ?>
     <section class="container">
         <h1>Salvar novo filme</h1>
-        <?php
-        if (isset($retorno)) {
-            echo '<p class=' . ($retorno['sucesso'] ? 'txt' : 'erro') . '>' . $retorno["mensagem"] . '</p>';
-            echo '<a class="btn btnprimary" href="home.php">Ir ao início</a>';
-            exit;
-        }
-        ?>
         <form action="salvar.php" method="POST" class="form">
             <div class="formgroup">
                 <label for="titulo">Título</label>

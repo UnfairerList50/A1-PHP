@@ -1,5 +1,6 @@
 <?php session_start();
+
 if (!isset($_SESSION['usuario']) || !isset($_SESSION['senha'])) {
-    header('location:index.php?code=1');
+    header('location:index.php?code=3');
     exit();
 }

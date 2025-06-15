@@ -2,12 +2,9 @@
 require_once 'funcoes.php';
 require_once 'autenticacao_usuario.php';
 
-$retorno = tratar_retorno();
-$filme = null;
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
-        header('Location: editar.php?code=4&id=' . $_POST['id']);
+        header('Location: editar.php?code=1&id=' . $_POST['id']);
         exit;
     }
 
@@ -31,17 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         mysqli_execute($stmt);
 
-        mysqli_close($conn);
-        header('Location: editar.php?code=0&id=' . $_POST['id']);
+        header('Location: listar.php?code=0');
         exit;
     } catch (mysqli_sql_exception $e) {
-        !isset($conn) ?: mysqli_close($conn);
-        header('Location: editar.php?code=2&id=' . $_POST['id']);
+        header('Location: listar.php?code=4');
         exit;
     }
 }
 
-// PROCESSAMENTO DO GET (busca do filme)
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     try {
         $conn = mysqli_connect('localhost', 'root', '', 'cinema');
@@ -54,16 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
         $filme = mysqli_fetch_assoc($resultado);
 
         if (!$filme) {
-            mysqli_close($conn);
-            header('Location: editar.php?code=3');
+            header('Location: editar.php?code=5');
             exit;
         }
-
-        mysqli_close($conn);
     } catch (mysqli_sql_exception $e) {
-        !isset($conn) ?: mysqli_close($conn);
-        echo $e->getMessage();
-        // header('Location: editar.php?code=2');
+        header('Location: editar.php?code=4');
         exit;
     }
 }
@@ -81,45 +70,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'header.php';
+    include 'toast.php'; ?>
     <section class="container">
         <h1>Editar filme</h1>
-        <?php
-        if (isset($retorno)) {
-            echo '<p class="' . ($retorno['sucesso'] ? 'txt' : 'erro') . '">' . $retorno["mensagem"] . '</p>';
-            if (!$retorno['sucesso']) {
-                echo '<a class="btn btnprimary" href="home.php">Ir ao início</a>';
-                exit;
-            }
-        }
-        ?>
-        <?php if ($filme) { ?>
-            <form action="editar.php" method="POST" class="form">
-                <input type="number" name="id" id="id" value="<?= $filme['id'] ?>" hidden>
-                <div class="formgroup">
-                    <label for="titulo">Título</label>
-                    <input class="forminput" type="text" id="titulo" name="titulo" value="<?= htmlspecialchars($filme['titulo']) ?>" required>
-                </div>
-                <div class="formgroup">
-                    <label for="lancamento">Lançamento</label>
-                    <input class="forminput" type="date" id="lancamento" name="lancamento" value="<?= date('Y-m-d', strtotime($filme['lancamento'])) ?>" required>
-                </div>
-                <div class="formgroup">
-                    <label for="sinopse">Sinopse</label>
-                    <textarea class="forminput" id="sinopse" name="sinopse" rows="4" required><?= htmlspecialchars($filme['sinopse']) ?></textarea>
-                </div>
-                <div class="formgroup">
-                    <label for="duracao">Duração</label>
-                    <input class="forminput" type="time" id="duracao" name="duracao" value="<?= date('H:i', strtotime($filme['duracao'])) ?>" required>
-                    <label for="avaliacao">Avaliação</label>
-                    <input class="forminput" type="number" min="0" max="10" step="0.1" id="avaliacao" name="avaliacao" value="<?= $filme['avaliacao'] ?>" required>
-                </div>
-                <div class="formgroup">
-                    <input class="btn btnprimary" type="submit" value="Salvar">
-                    <input class="btn" type="reset" value="Limpar">
-                </div>
-            </form>
-        <?php } ?>
+        <?php if (!isset($filme)) {
+            exit;
+        } ?>
+        <form action="editar.php" method="POST" class="form">
+            <input type="number" name="id" id="id" value="<?= $filme['id'] ?>" hidden>
+            <div class="formgroup">
+                <label for="titulo">Título</label>
+                <input class="forminput" type="text" id="titulo" name="titulo" value="<?= $filme['titulo'] ?>" required>
+            </div>
+            <div class="formgroup">
+                <label for="lancamento">Lançamento</label>
+                <input class="forminput" type="date" id="lancamento" name="lancamento" value="<?= date('Y-m-d', strtotime($filme['lancamento'])) ?>" required>
+            </div>
+            <div class="formgroup">
+                <label for="sinopse">Sinopse</label>
+                <textarea class="forminput" id="sinopse" name="sinopse" rows="4" required><?= $filme['sinopse'] ?></textarea>
+            </div>
+            <div class="formgroup">
+                <label for="duracao">Duração</label>
+                <input class="forminput" type="time" id="duracao" name="duracao" value="<?= date('H:i', strtotime($filme['duracao'])) ?>" required>
+                <label for="avaliacao">Avaliação</label>
+                <input class="forminput" type="number" min="0" max="10" step="0.1" id="avaliacao" name="avaliacao" value="<?= $filme['avaliacao'] ?>" required>
+            </div>
+            <div class="formgroup">
+                <input class="btn btnprimary" type="submit" value="Salvar">
+                <input class="btn" type="reset" value="Limpar">
+            </div>
+        </form>
     </section>
 </body>
 

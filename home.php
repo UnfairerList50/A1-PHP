@@ -12,6 +12,11 @@
 
 <body>
     <?php include 'header.php'; ?>
+    <section class="container primary">
+        <img class="icoprimary" src="ico/movie.svg" alt="">
+        <h1 class="label">Bem-vindo ao sistema de bilheteria</h1>
+        <p class="label">Crie, edite ou apague a lista de filmes disponíveis no cinema.</p>
+    </section>
 </body>
 
 </html>
