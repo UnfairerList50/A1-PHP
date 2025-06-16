@@ -23,6 +23,7 @@ body {
 }
 
 .btn {
+    margin: 3px;
     display: inline-block;
     font-size: 16px;
     border: 0;
@@ -36,8 +37,8 @@ body {
     transition: background-color 0.1s ease, color 0.1s ease;
 }
 
-.btnsecundary {
-    box-shadow: 0 4px 8px #00000033;
+.btnsecondary {
+    box-shadow: 0px 0px 3px 1px #00000033;
 }
 
 .btn:hover {
@@ -70,6 +71,16 @@ body {
     box-shadow: 0px 0px 3px 1px #00000066;
     outline: none;
     transition: 0.1s ease;
+}
+
+.breadcrumb {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 20px;
 }
 
 .container {

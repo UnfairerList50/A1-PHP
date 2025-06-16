@@ -1,4 +1,6 @@
-<?php require_once 'autenticacao_usuario.php'; ?>
+<?php require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -11,12 +13,13 @@
 </head>
 
 <body>
-    <?php include 'header.php'; ?>
+    <?php include 'includes/header.php'; ?>
     <section class="container primary">
         <img class="icoprimary" src="ico/movie.svg" alt="">
-        <h1 class="label">Bem-vindo ao sistema de bilheteria</h1>
+        <h1 class="label">Bem-vindo ao gerenciador de filmes do cinema</h1>
         <p class="label">Crie, edite ou apague a lista de filmes disponíveis no cinema.</p>
     </section>
+    <?php include 'includes/toast.php'; ?>
 </body>
 
 </html>

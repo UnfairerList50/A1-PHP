@@ -1,6 +1,6 @@
 <?php
-require_once 'autenticacao_usuario.php';
-require_once 'funcoes.php';
+require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
 
 if (!isset($_GET['code']) || $_GET['code'] == 0) {
     try {
@@ -14,7 +14,7 @@ if (!isset($_GET['code']) || $_GET['code'] == 0) {
         $resultado = mysqli_stmt_get_result($stmt);
 
         if (mysqli_num_rows($resultado) <= 0) {
-            header('Location: listar.php?code=6');
+            header('Location: filmes.php?code=6');
             exit;
         }
 
@@ -22,7 +22,7 @@ if (!isset($_GET['code']) || $_GET['code'] == 0) {
             $filmes[] = $linha;
         }
     } catch (mysqli_sql_exception $e) {
-        header('Location: listar.php?code=4');
+        header('Location: filmes.php?code=4');
         exit;
     }
 }
@@ -39,10 +39,14 @@ if (!isset($_GET['code']) || $_GET['code'] == 0) {
 </head>
 
 <body>
-    <?php include 'header.php';
-    include 'toast.php'; ?>
+    <?php include 'includes/header.php';
+    include 'includes/toast.php'; ?>
     <section class="container">
-        <h1>Filmes salvos</h1>
+        <div class="breadcrumb">
+            <a href="dashboard.php" class="link">Início</a>
+            <span>></span>
+            <h1 class="label">Ver filmes</h1>
+        </div>
         <?php if (!isset($filmes)) {
             exit;
         } ?>
@@ -68,8 +72,8 @@ if (!isset($_GET['code']) || $_GET['code'] == 0) {
                         <td><?= date_format(new DateTime($filme['duracao']), "H:i") ?></td>
                         <td><?= $filme['avaliacao'] ?></td>
                         <td>
-                            <a href="editar.php?id=<?= $filme['id'] ?>" class="btn btnprimary">Editar</a>
-                            <a href="excluir.php?id=<?= $filme['id'] ?>" class="btn">Excluir</a>
+                            <a href="editar_filme.php?id=<?= $filme['id'] ?>" class="btn btnprimary">Editar</a>
+                            <a href="excluir_filme.php?id=<?= $filme['id'] ?>" class="btn">Excluir</a>
                         </td>
                     </tr>
                 <?php } ?>

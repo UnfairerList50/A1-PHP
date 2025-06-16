@@ -1,10 +1,10 @@
 <?php
-require_once 'funcoes.php';
+require_once 'includes/funcoes.php';
 
 $retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
-        header('Location:criar_usuario.php?code=1');
+        header('Location:cadastro_usuario.php?code=1');
         exit;
     }
     try {
@@ -23,10 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } catch (mysqli_sql_exception $e) {
         if ($e->getCode() == 1062) {
             // Codigo indica que usuario ja existe
-            header('Location: criar_usuario.php?code=7');
+            header('Location: cadastro_usuario.php?code=7');
             exit;
         } else {
-            header('Location: criar_usuario.php?code=3');
+            header('Location: cadastro_usuario.php?code=4');
             exit;
         }
     }
@@ -45,10 +45,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="bg">
-    <?php include 'toast.php'; ?>
+    <?php include 'includes/toast.php'; ?>
     <section class="container card">
         <h1>Criar nova conta</h1>
-        <form action="criar_usuario.php" class="form" method="POST">
+        <form action="cadastro_usuario.php" class="form" method="POST">
             <input class="forminput" type="text" id="usuario" name="usuario" placeholder="Nome do usuário" required>
             <input class="forminput" type="email" id="email" name="email" placeholder="E-mail" required>
             <input class="forminput" type="password" id="senha" name="senha" placeholder="Senha" required>

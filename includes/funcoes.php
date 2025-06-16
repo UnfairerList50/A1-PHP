@@ -22,7 +22,7 @@ function tratar_retorno()
     switch ((int)$_GET['code']) {
 
         case 0:
-            return 'Operação realizada com sucesso.';
+            return 'Operação concluída com sucesso.';
             break;
 
         case 1:

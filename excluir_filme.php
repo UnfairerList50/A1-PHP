@@ -1,6 +1,6 @@
 <?php
-require_once 'funcoes.php';
-require_once 'autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
+require_once 'includes/autenticacao_usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
@@ -14,14 +14,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
         mysqli_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            header('location:listar.php?code=0');
+            header('location:filmes.php?code=0');
             exit;
         } else {
-            header('location:listar.php?code=5');
+            header('location:dashboard.php?code=5');
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        header('Location: listar.php?code=4');
+        header('Location: dashboard.php?code=4');
         exit;
     }
 }

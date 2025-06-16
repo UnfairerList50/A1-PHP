@@ -1,5 +1,5 @@
 <?php
-require_once 'funcoes.php';
+require_once 'includes/funcoes.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario'] = $usuario;
         $_SESSION['senha'] = $senha;
 
-        header('location:home.php');
+        header('location:dashboard.php');
     } catch (mysqli_sql_exception $e) {
-        header('Location: index.php?code=4');
+        header('Location:index.php?code=4');
         exit;
     }
 }
@@ -41,8 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<?php require_once 'funcoes.php'; ?>
 
 <head>
     <meta charset="UTF-8">
@@ -53,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body class="bg">
-    <?php include 'toast.php'; ?>
+    <?php include 'includes/toast.php'; ?>
     <section class="container card">
         <img src="ico/person-circle.svg" class="ico">
         <h1 class="label">Fazer login</h1>
@@ -62,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input class="forminput" type="password" id="senha" name="senha" placeholder="Senha" required>
             <input class="btn btnprimary" type="submit" value="Login">
         </form>
-        <a href="criar_usuario.php" class="link">Criar conta</a>
+        <a href="cadastro_usuario.php" class="link">Criar conta</a>
     </section>
 </body>
 

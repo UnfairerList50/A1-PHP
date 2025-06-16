@@ -1,10 +1,10 @@
 <?php
-require_once 'funcoes.php';
-require_once 'autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
+require_once 'includes/autenticacao_usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
-        header('Location: salvar.php?code=4');
+        header('Location:novo_filme.php?code=1');
         exit;
     }
 
@@ -19,11 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mysqli_execute($stmt);
 
         if (mysqli_stmt_affected_rows($stmt) > 0) {
-            header('location:salvar.php?code=0');
+            header('location:novo_filme.php?code=0');
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        header('Location: salvar.php?code=4');
+        header('Location:novo_filme.php?code=4');
         exit;
     }
 }
@@ -41,11 +41,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <?php include 'header.php';
-    include 'toast.php'; ?>
+    <?php include 'includes/header.php';
+    include 'includes/toast.php'; ?>
     <section class="container">
-        <h1>Salvar novo filme</h1>
-        <form action="salvar.php" method="POST" class="form">
+        <div class="breadcrumb">
+            <a href="dashboard.php" class="link">Início</a>
+            <span>></span>
+            <h1 class="label">Salvar filme</h1>
+        </div>
+        <form action="novo_filme.php" method="POST" class="form">
             <div class="formgroup">
                 <label for="titulo">Título</label>
                 <input class="forminput" type="text" id="titulo" name="titulo" required>
@@ -56,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="formgroup">
                 <label for="sinopse">Sinopse</label>
-                <textarea class="forminput" id="sinopse" name="sinopse" rows="4" required></textarea>
+                <textarea class="forminput" id="sinopse" name="sinopse" rows="3" maxlength="200" required></textarea>
             </div>
             <div class="formgroup">
                 <label for="duracao">Duração</label>
@@ -66,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="formgroup">
                 <input class="btn btnprimary" type="submit" value="Salvar">
-                <input class="btn" type="reset" value="Limpar">
+                <input class="btn btnsecondary" type="reset" value="Limpar">
             </div>
         </form>
     </section>

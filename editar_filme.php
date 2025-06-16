@@ -1,10 +1,10 @@
 <?php
-require_once 'funcoes.php';
-require_once 'autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
+require_once 'includes/autenticacao_usuario.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
-        header('Location: editar.php?code=1&id=' . $_POST['id']);
+        header('Location: editar_filme.php?code=1&id=' . $_POST['id']);
         exit;
     }
 
@@ -28,10 +28,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         );
         mysqli_execute($stmt);
 
-        header('Location: listar.php?code=0');
+        header('Location: filmes.php?code=0');
         exit;
     } catch (mysqli_sql_exception $e) {
-        header('Location: listar.php?code=4');
+        header('Location: filmes.php?code=4');
         exit;
     }
 }
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
         $filme = mysqli_fetch_assoc($resultado);
 
         if (!$filme) {
-            header('Location: editar.php?code=5');
+            header('Location: editar_filme.php?code=5');
             exit;
         }
     } catch (mysqli_sql_exception $e) {
-        header('Location: editar.php?code=4');
+        header('Location: editar_filme.php?code=4');
         exit;
     }
 }
@@ -66,18 +66,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="shortcut icon" href="ico/camera-reels-fill.svg" type="image/x-icon">
-    <title>Editar Filme</title>
+    <title>Editar filme</title>
 </head>
 
 <body>
-    <?php include 'header.php';
-    include 'toast.php'; ?>
+    <?php include 'includes/header.php';
+    include 'includes/toast.php'; ?>
     <section class="container">
-        <h1>Editar filme</h1>
+        <div class="breadcrumb">
+            <a href="filmes.php" class="link">Ver filmes</a>
+            <span>></span>
+            <h1 class="label">Editar filme</h1>
+        </div>
         <?php if (!isset($filme)) {
             exit;
         } ?>
-        <form action="editar.php" method="POST" class="form">
+        <form action="editar_filme.php" method="POST" class="form">
             <input type="number" name="id" id="id" value="<?= $filme['id'] ?>" hidden>
             <div class="formgroup">
                 <label for="titulo">Título</label>
@@ -89,7 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             </div>
             <div class="formgroup">
                 <label for="sinopse">Sinopse</label>
-                <textarea class="forminput" id="sinopse" name="sinopse" rows="4" required><?= $filme['sinopse'] ?></textarea>
+                <textarea class="forminput" id="sinopse" name="sinopse" rows="3" maxlength="200"><?= $filme['sinopse'] ?></textarea>
             </div>
             <div class="formgroup">
                 <label for="duracao">Duração</label>
@@ -99,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
             </div>
             <div class="formgroup">
                 <input class="btn btnprimary" type="submit" value="Salvar">
-                <input class="btn" type="reset" value="Limpar">
+                <input class="btn btnsecondary" type="reset" value="Descartar alterações">
             </div>
         </form>
     </section>
