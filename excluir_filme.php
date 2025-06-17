@@ -1,8 +1,9 @@
 <?php
-require_once 'includes/funcoes.php';
 require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
 require_once 'includes/conexao_mysql.php';
 
+// fluxo para excluir um filme
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         $conn = conectar_banco();

@@ -1,8 +1,9 @@
 <?php
-require_once 'includes/funcoes.php';
 require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
 require_once 'includes/conexao_mysql.php';
 
+// Fluxo para salvar um novo filme
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
         header('Location:novo_filme.php?code=1');

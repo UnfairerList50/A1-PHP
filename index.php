@@ -2,6 +2,7 @@
 require_once 'includes/funcoes.php';
 require_once 'includes/conexao_mysql.php';
 
+// Fluxo para autenticar o usuário
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
         header('Location:index.php?code=1');

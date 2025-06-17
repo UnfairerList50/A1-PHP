@@ -1,4 +1,5 @@
-<?php require_once 'includes/autenticacao_usuario.php';
+<?php
+require_once 'includes/autenticacao_usuario.php';
 require_once 'includes/funcoes.php';
 ?>
 <!DOCTYPE html>

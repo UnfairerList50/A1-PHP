@@ -1,8 +1,9 @@
 <?php
-require_once 'includes/funcoes.php';
 require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/funcoes.php';
 require_once 'includes/conexao_mysql.php';
 
+// fluxo para salvar o filme editado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
         header('Location: editar_filme.php?code=1&id=' . $_POST['id']);
@@ -37,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+// fluxo para carregar o filme a ser editado
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     try {
         $conn = conectar_banco();
