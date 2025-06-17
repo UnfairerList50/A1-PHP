@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/funcoes.php';
+require_once 'includes/conexao_mysql.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
@@ -8,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $sql = "SELECT id, usuario, senha FROM usuarios
                 WHERE (usuario = ? OR email = ?) AND senha = ?";

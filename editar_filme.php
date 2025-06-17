@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/funcoes.php';
 require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/conexao_mysql.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
@@ -9,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $sql = "UPDATE filmes SET lancamento = ?, titulo = ?, sinopse = ?, duracao = ?, avaliacao = ?
                 WHERE id = ? AND usuarioId = ?";
@@ -38,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $sql = "SELECT * FROM filmes WHERE id = ? AND usuarioId = ?";
         $stmt = mysqli_prepare($conn, $sql);

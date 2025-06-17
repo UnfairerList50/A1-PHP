@@ -1,10 +1,11 @@
 <?php
 require_once 'includes/funcoes.php';
 require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/conexao_mysql.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $sql = "DELETE FROM filmes
                 WHERE id = ? AND usuarioId = ?";

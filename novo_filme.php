@@ -1,6 +1,7 @@
 <?php
 require_once 'includes/funcoes.php';
 require_once 'includes/autenticacao_usuario.php';
+require_once 'includes/conexao_mysql.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (form_em_branco()) {
@@ -9,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $sql = "INSERT INTO filmes (lancamento, titulo, sinopse, duracao, avaliacao, usuarioId)
                 VALUES (?, ?, ?, ?, ?, ?)";

@@ -1,10 +1,11 @@
 <?php
 require_once 'includes/autenticacao_usuario.php';
 require_once 'includes/funcoes.php';
+require_once 'includes/conexao_mysql.php';
 
 if (!isset($_GET['code']) || $_GET['code'] == 0) {
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $query = "SELECT * FROM filmes WHERE usuarioId = ?";
 

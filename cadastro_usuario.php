@@ -1,5 +1,6 @@
 <?php
 require_once 'includes/funcoes.php';
+require_once 'includes/conexao_mysql.php';
 
 $retorno = tratar_retorno();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -8,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit;
     }
     try {
-        $conn = mysqli_connect('localhost', 'root', '', 'cinema');
+        $conn = conectar_banco();
 
         $sql = "INSERT INTO usuarios (usuario, email, senha) VALUES (?, ?, ?)";
 
