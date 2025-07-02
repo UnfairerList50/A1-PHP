@@ -1,7 +1,8 @@
 # Sistema de cadastro e gerenciamento de filmes
 
-Jorge Fernando Kozloski de Aquino  
- RGM: 37032143
+![Login](img/image3.jpeg)
+![Página inicial](img/image.png)
+![Salvar filme](img/image2.jpeg)
 
 ## Funcionalidades
 
